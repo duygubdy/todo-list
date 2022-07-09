@@ -7,16 +7,16 @@ function TodoForm({todos,setTodos}) {
   const [inputText, setInputText] = useState("");
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
-const inputHandler=(e)=>{    
-  setInputText(e.target.value);
-  // setInputText(e.target.value);
-  setValue1(e.target.value)
-  setValue2(e.target.value)
- 
-};
+
+  const statu = {
+    1: 'nStart',
+    2: 'process',
+    3: 'done'
+    }
+
 const submitHandler=(e)=>{    
   e.preventDefault();
-  setTodos([...todos,{text:inputText,date1:value1,date2:value2,completed:false,id:Math.random()*10000}])
+  setTodos([...todos,{text:inputText,date1:value1,date2:value2,statu:1,completed:false,id:Math.random()*10000}])
   
 };
   return (
