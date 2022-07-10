@@ -13,7 +13,7 @@ function TodoForm({todos,setTodos}) {
 
 const submitHandler=(e)=>{    
   e.preventDefault();
-  setTodos([...todos,{text:inputText,date1:value1,date2:value2,id:Math.random()*10000}])
+  setTodos([...todos,{text:inputText,date1:value1,date2:value2,status:"notStarted",id:Math.random()*10000}])
 };
   return (
     <div>

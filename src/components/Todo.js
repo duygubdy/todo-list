@@ -1,49 +1,44 @@
 import React from 'react'
-import { useReducer } from "react";
 import ReactDOM from "react-dom/client";
+import { useState } from 'react';
 
 function Todo({text,todo,todos,setTodos,date1,date2}) {
   
-  function changeStatus(status,action){
-    if(action==="process"){
-      
-    }
+  const Status={
+    notStarted:"notStarted",
+    process:"process",
+    done:"done"
   }
-
+  const [status,setStatus]=useState(Status.notStarted)
 
   const removeHandler=()=>{
     setTodos(todos.filter(el=>el.id !==todo.id))
   }
-  const toggleDone = (id) => {
-    setTodos(
-     todos.map((todo) =>
-        todo.id === id ? { ...todos, statu: todo.statu!="1" } : todo ));
-        console.log("burdasınız ")
-  }
 
-  // function statusHandler(){
-  //   if(status=="notStarted") {
-  //     setStatus="process";
-  //   }
-  //   if(setStatus=="process"){
-  //     setStatus="done"
-  //   }
-  // }
+  
+  function statusHandler(){
+    if(Status.notStarted){
+      setStatus(Status.process)
+    }
+    if(Status.process){
+      setStatus(Status.done)
+    }
+  }
 
   return (
     <div className='to-do'>
-      <li className='todoItems'>{text + ' ' + date1 + ' ' + date2  } </li>
+      <li className='todoItems'>{text + ' ' + date1 + ' ' + date2  +status } </li>
       
       <button
         className='start-button'
         name='start'
-        // onClick={statusHandler}
+        onClick={statusHandler}
         >start</button>
-
+      
       <button 
         className='done-button'
         name='done'
-        onClick={toggleDone}
+        onClick={statusHandler}
         >done</button>
 
       <button onClick={removeHandler}>delete</button>

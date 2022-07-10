@@ -10,3 +10,15 @@
     border-radius: 10px;
     padding-bottom: 32px; 
   }
+  .todo-list{
+     list-style-type: none;
+    padding-left: 0;
+    margin-left: 15px;
+   
+
+  }
+  .todo{
+    width: 200px;
+    min-height: 100px;
+    background-color: rgba(245, 245, 255, 0.6);
+  }
