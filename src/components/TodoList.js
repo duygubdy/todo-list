@@ -10,8 +10,8 @@ function TodoList({todos,setTodos}) {
       <ul className='todo-list'>
             {todos.map((todo)=>(
                 <Todo 
-                  todos={todos} 
-                  setTodos={setTodos} 
+                  todos={todos}
+                  setTodos={setTodos}
                   key={todo.id} 
                   text={todo.text}
                   date1={todo.date1}
