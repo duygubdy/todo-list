@@ -15,15 +15,6 @@ function Todo({text,todo,todos,setTodos,date1,date2}) {
     setTodos(todos.filter(el=>el.id !==todo.id))
   }
 
-  
-  function statusHandler(){
-    if(Status.notStarted){
-      setStatus(Status.process)
-    }
-    if(Status.process){
-      setStatus(Status.done)
-    }
-  }
 
   return (
     <div className='to-do'>
@@ -32,13 +23,13 @@ function Todo({text,todo,todos,setTodos,date1,date2}) {
       <button
         className='start-button'
         name='start'
-        onClick={statusHandler}
+        onClick={()=>setStatus(Status.process)}
         >start</button>
       
       <button 
         className='done-button'
         name='done'
-        onClick={statusHandler}
+        onClick={()=>setStatus(Status.done)}
         >done</button>
 
       <button onClick={removeHandler}>delete</button>
