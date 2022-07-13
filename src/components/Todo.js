@@ -5,24 +5,30 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import TodoForm from './TodoForm';
 
-function Todo({text,todo,todos,setTodos,date1,date2}) {
+function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText}) {
   
   const Status={
     notStarted:"notStarted",
     process:"process",
     done:"done"
   }
-  const [status,setStatus]=useState(Status.notStarted)
-  const [editable,setEditable]=useState(false)
+  const [status,setStatus]=useState(Status.notStarted);
+  
   const removeHandler=()=>{
     setTodos(todos.filter(el=>el.id !==todo.id))
   }
+  
+  const editHandler =()=>{
+    const editTodo=todos.find(el=>el.id===id);
+    inputText(editTodo.text)
+  };
 
-
+  
   return (
     <div className='to-do'>
-      <li className='todoItems'>{text + ' ' + date1 + ' ' + date2  +status } </li>
+      <li className='todoItems'>{text + ' ' + date1 + ' ' + date2} </li>
       
       <PlayArrowIcon
         color="success"
@@ -39,7 +45,9 @@ function Todo({text,todo,todos,setTodos,date1,date2}) {
 
       <DeleteOutlineRoundedIcon onClick={removeHandler}/>
 
-      <EditIcon/>
+      <EditIcon
+      className='editIcon'
+      onClick={editHandler}/>
       
       
       

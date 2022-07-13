@@ -1,9 +1,9 @@
 import React from 'react'
-import { useState,useEfect } from 'react'
+import { useState } from 'react'
 import Todo from './Todo'
 
 
-function TodoList({todos,setTodos,status,setStatus}) {
+function TodoList({todos,setTodos,status,setStatus,inputText,setInputText}) {
 
   return (
     <div className='todo-list'>
@@ -11,6 +11,8 @@ function TodoList({todos,setTodos,status,setStatus}) {
       <ul className='todo-list'>
             {todos.map((todo)=>(
                 <Todo 
+                  inputText={inputText}
+                  setInputText={setInputText}
                   todos={todos}
                   setTodos={setTodos}
                   key={todo.id} 

@@ -3,18 +3,29 @@ import { useState } from 'react'
 import TodoList from './TodoList';
 import { TextField } from '@mui/material';
 import {Button} from '@mui/material';
+import Todo from './Todo';
 
-
-function TodoForm({todos,setTodos}) {
-  const [inputText, setInputText] = useState("");
+function TodoForm({inputText,setInputText,todos,setTodos}) {
+  
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
 
-
+ 
 const submitHandler=(e)=>{    
   e.preventDefault();
-  setTodos([...todos,{text:inputText,date1:value1,date2:value2,status:"notStarted",id:Math.random()*10000}])
+  if(inputText !==""){
+    setTodos([...todos,{text:inputText,date1:value1,date2:value2,status:"notStarted",id:Math.random()*10000}])
+    setInputText("");
+    setValue1("");
+    setValue2("");
+  }
+  
+  else{
+    alert("Please add a todo")
+  }
+  
 };
+ 
   return (
     <div>
       <TextField 
@@ -38,7 +49,7 @@ const submitHandler=(e)=>{
         name="date1" 
         type="date" 
         value={value1}
-        onChange={e => setValue1(e.target.value) }
+        onChange={e =>setValue1(e.target.value) }
         
       />
 
