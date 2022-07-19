@@ -7,8 +7,9 @@ import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlin
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import TodoForm from './TodoForm';
 
-function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText}) {
-  
+
+function Todo({setInputText,text,todo,todos,setTodos,date1,date2,editHandler}) {
+ 
   const Status={
     notStarted:"notStarted",
     process:"process",
@@ -19,12 +20,6 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText}) 
   const removeHandler=()=>{
     setTodos(todos.filter(el=>el.id !==todo.id))
   }
-  
-  const editHandler =()=>{
-    const editTodo=todos.find(el=>el.id===id);
-    inputText(editTodo.text)
-  };
-
   
   return (
     <div className='to-do'>
@@ -47,13 +42,11 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText}) 
 
       <EditIcon
       className='editIcon'
-      onClick={editHandler}/>
-      
-      
-      
+      onClick={() => editHandler(todo.id)}
+     />
+
     </div>
     
   );
-}
-
+  }
 export default Todo
