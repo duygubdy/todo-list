@@ -11,6 +11,31 @@ function App() {
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
   const [editId, setEditId] = useState(0);
+  const [filteredTodos,setFilteredTodos]=useState([]);
+
+  const Status={
+    notStarted:"notStarted",
+    process:"process",
+    done:"done"
+  }
+  const [status,setStatus]=useState(Status.notStarted);
+
+  
+  const filterHandler=()=>{
+    switch(status){
+      case "open":
+        setFilteredTodos(todos.filter(todo=>Status.notStarted))
+        break;
+      case "process":
+        setFilteredTodos(todos.filter(todo=>Status.process))
+        break;
+      case "done":
+        setFilteredTodos(todos.filter(todo=>Status.done))
+        break;
+      default:
+        setFilteredTodos(todos)
+  }
+  }
 
   const editHandler =(id)=>{
     const editTodo=todos.find(el=>el.id===id);
@@ -28,10 +53,11 @@ function App() {
        value2={value2} setValue2={setValue2}
        editId={editId} setEditId={setEditId}
        editHandler={editHandler}
+       filterHandler={filterHandler}
        />
 
       <TodoList todos= {todos} setTodos={setTodos} inputText={inputText} setInputText={setInputText}
-      editHandler={editHandler}
+      editHandler={editHandler} status={status} setStatus={setStatus} Status={Status}
       />
     </div>
   )}

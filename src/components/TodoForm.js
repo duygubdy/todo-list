@@ -4,8 +4,13 @@ import TodoList from './TodoList';
 import { TextField } from '@mui/material';
 import {Button} from '@mui/material';
 import Todo from './Todo';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
-function TodoForm({editId,setEditId,inputText,setInputText,todos,setTodos,value1,value2,setValue1,setValue2}) {
+
+function TodoForm({editId,setEditId,inputText,setInputText,todos,setTodos,value1,value2,setValue1,setValue2,filterHandler}) {
   
 const submitHandler=(e)=>{    
   e.preventDefault();
@@ -14,7 +19,7 @@ const submitHandler=(e)=>{
     const editTodo = todos.find((i) => i.id === editId);
     const updatedTodos = todos.map((t) => t.id === editTodo.id
         ? (t = {id: t.id , inputText,date1:value1,date2:value2,status:"notStarted" })
-        : { id: t.id, text: t.inputText, date1:value1,date2:value2,status:"notStarted" }
+        : {id: t.id, text: t.inputText, date1:value1,date2:value2,status:"notStarted"}
     );
     setTodos(updatedTodos);
     setEditId(0);
@@ -32,6 +37,7 @@ const submitHandler=(e)=>{
   //   alert("Please add a todo")
   // }
 };
+
 
   return (
     <div>
@@ -67,6 +73,22 @@ const submitHandler=(e)=>{
         value={value2}
         onChange={e => setValue2(e.target.value)}
       />
+
+<FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="demo-simple-select-standard-label">Statu</InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          label="Age"
+        >
+          <MenuItem value="All">
+            All
+          </MenuItem>
+          <MenuItem value="Open">Open</MenuItem>
+          <MenuItem value="in Process" onClick={filterHandler}>Process</MenuItem>
+          <MenuItem value="Done">Done</MenuItem>
+        </Select>
+      </FormControl>
     
     </div>
   )

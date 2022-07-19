@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Todo from './Todo'
 
 
-function TodoList({todos,setTodos,status,setStatus,inputText,setInputText,editHandler}) {
+function TodoList({Status,status,setStatus,todos,setTodos,inputText,setInputText,editHandler}) {
 
   return (
     <div className='todo-list'>
@@ -21,6 +21,7 @@ function TodoList({todos,setTodos,status,setStatus,inputText,setInputText,editHa
                   editHandler={editHandler}
                   date2={todo.date2}
                   status={status}
+                  Status={Status}
                   setStatus={setStatus}
                   todo={todo} 
                   id={todo.id}/>

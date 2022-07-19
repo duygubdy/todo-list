@@ -8,15 +8,9 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import TodoForm from './TodoForm';
 
 
-function Todo({setInputText,text,todo,todos,setTodos,date1,date2,editHandler}) {
+function Todo({Status,status,setStatus,text,todo,todos,setTodos,date1,date2,editHandler}) {
  
-  const Status={
-    notStarted:"notStarted",
-    process:"process",
-    done:"done"
-  }
-  const [status,setStatus]=useState(Status.notStarted);
-  
+
   const removeHandler=()=>{
     setTodos(todos.filter(el=>el.id !==todo.id))
   }
