@@ -10,22 +10,11 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 
-function TodoForm({editId,setEditId,inputText,setInputText,todos,setTodos,value1,value2,setValue1,setValue2,filterHandler}) {
+function TodoForm({inputText,setInputText,todos,setTodos,value1,value2,setValue1,setValue2,filterHandler}) {
   
 const submitHandler=(e)=>{    
   e.preventDefault();
 
-  if (editId) {
-    const editTodo = todos.find((i) => i.id === editId);
-    const updatedTodos = todos.map((t) => t.id === editTodo.id
-        ? (t = {id: t.id , inputText,date1:value1,date2:value2,status:"notStarted" })
-        : {id: t.id, text: t.inputText, date1:value1,date2:value2,status:"notStarted"}
-    );
-    setTodos(updatedTodos);
-    setEditId(0);
-    setInputText("");
-    return;
-  }
   if(inputText !==""){
     setTodos([...todos,{text:inputText,date1:value1,date2:value2,status:"notStarted",id:Math.random()*10000}])
     setInputText("");
@@ -33,9 +22,9 @@ const submitHandler=(e)=>{
     setValue2("");
   }
   
-  // else{
-  //   alert("Please add a todo")
-  // }
+  else{
+    alert("Please add a todo")
+  }
 };
 
 
@@ -55,7 +44,7 @@ const submitHandler=(e)=>{
         className='todo-button'
         onClick={submitHandler}
         variant="contained" color="success"
-      >{editId ? "Edit" : "Add"}</Button>
+      >Add</Button>
 
       <input 
         className='todo-inputDate'
