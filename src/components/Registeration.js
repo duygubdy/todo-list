@@ -50,7 +50,7 @@ function Registeration() {
         variant="contained" color="success"
       >Login</Button>
 
-      <EditIcon className="editIcon" onClick={handleClickOpen} />
+       <Button variant="text" onClick={handleClickOpen} >Sign up</Button> 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Update Todo</DialogTitle>
         <DialogContent>
