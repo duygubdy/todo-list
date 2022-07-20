@@ -76,7 +76,7 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText}) 
             margin="dense"
             id="name"
             label="update todo"
-            type="email"
+            type="text"
             onChange={(e) => setEditText(e.target.value)}
             fullWidth
             variant="standard"

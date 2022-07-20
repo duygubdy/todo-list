@@ -68,7 +68,7 @@ const submitHandler=(e)=>{
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          label="Age"
+          
         >
           <MenuItem value="All">
             All
