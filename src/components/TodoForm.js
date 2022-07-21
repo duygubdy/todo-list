@@ -8,13 +8,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import SearchIcon from '@mui/icons-material/Search';
 
+function TodoForm({inputText,setInputText,todos,setTodos,value1,value2,setValue1,setValue2,filterHandler,search,setSearch}) {
 
-function TodoForm({inputText,setInputText,todos,setTodos,value1,value2,setValue1,setValue2,filterHandler}) {
-  
 const submitHandler=(e)=>{    
   e.preventDefault();
-
   if(inputText !==""){
     setTodos([...todos,{text:inputText,date1:value1,date2:value2,status:"notStarted",id:Math.random()*10000}])
     setInputText("");
@@ -27,9 +26,24 @@ const submitHandler=(e)=>{
   }
 };
 
+// const handleChange = (event) => {
+//   setFilterStatus(event.target.value);
+// };
 
   return (
     <div>
+      <TextField 
+        margin="dense"
+        id="name"
+        label="Search"
+        type="text"
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+        fullWidth
+        variant="standard"
+      ></TextField>
+      <br></br>
       <TextField 
         className='todo-inputText'
         name="text"  
@@ -64,19 +78,25 @@ const submitHandler=(e)=>{
       />
 
 <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">Statu</InputLabel>
+        {/* <InputLabel id="demo-simple-select-standard-label">Statu</InputLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          
-        >
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={filterStatus}
+        label="Age"
+        onChange={handleChange}
+      > */}
           <MenuItem value="All">
             All
           </MenuItem>
+          
+          <Select>
           <MenuItem value="Open">Open</MenuItem>
           <MenuItem value="in Process" onClick={filterHandler}>Process</MenuItem>
           <MenuItem value="Done">Done</MenuItem>
         </Select>
+
+    
       </FormControl>
     
     </div>

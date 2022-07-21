@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
@@ -14,17 +14,34 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 
-function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText}) {
+function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText,search,setSearch}) {
   const [open, setOpen] = React.useState(false);
   const [editText, setEditText] = useState("");
+  const [temp, setTemp] = useState(todos);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  
+  useEffect(() => {
+    searchText();
+  }, [search]);
+
+  useEffect(() => {
+    searchText();
+  }, [search]);
+
+  // useEffect(() => {
+  //   filterStatus();
+  //   console.log(searchStatus);
+  // }, [searchStatus]);
+
+  
   const handleClose = () => {
     setOpen(false);
   };
+
   const Status = {
     notStarted: "notStarted",
     process: "process",
@@ -38,10 +55,8 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText}) 
 
   const editHandler = (e) => {
     e.preventDefault();
-    console.log(editText);
     todos.map((t) => {
       if (t.id === id) t.text = editText;
-      console.log(t);
     });
 
     setOpen(false);
@@ -49,9 +64,34 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText}) 
     setInputText();
   };
 
+  const searchText = () => {
+    
+    if (search && search.trim().length > 0) {
+      const text = search.toLowerCase();
+      const searchTodos = todos.filter((t) => {
+        return t.text.includes(text);
+      });
+      setTodos(searchTodos);
+    } else {
+      setTodos(temp);
+    }
+  };
+
+  // const filterStatus = () => {
+  //   if (searchStatus && searchStatus.length > 0) {
+  //     const filterStatus = todos.filter((t) => {
+  //       return t.Status === searchStatus;
+  //     });
+  //     if (filterStatus) {
+  //       setTodos(filterStatus);
+  //     }
+  //   }
+  // };
+
+
   return (
     <div className="to-do">
-      <li className="todoItems">{text + " " + date1 + " " + date2} </li>
+      <li className="todoItems">{text + " " + date1 + " " + date2  +status} </li>
 
       <PlayArrowIcon
         color="success"

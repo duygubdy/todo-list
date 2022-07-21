@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Todo from './Todo'
 
 
-function TodoList({Status,status,setStatus,todos,setTodos,inputText,setInputText,editHandler}) {
+function TodoList({Status,status,setStatus,todos,setTodos,inputText,setInputText,editHandler,search,setSearch,filterStatus,setFilterStatus}) {
 
   return (
     <div className='todo-list'>
@@ -24,7 +24,11 @@ function TodoList({Status,status,setStatus,todos,setTodos,inputText,setInputText
                   Status={Status}
                   setStatus={setStatus}
                   todo={todo} 
-                  id={todo.id}/>
+                  id={todo.id}
+                  search={search}
+                  setSearch={setSearch}
+                  filterStatus={filterStatus}
+                  setFilterStatus={setFilterStatus}/>
             ))}
         </ul>
       </box> 

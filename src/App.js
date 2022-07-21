@@ -11,7 +11,8 @@ function App() {
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
   // const [editId, setEditId] = useState(0);
-  const [filteredTodos,setFilteredTodos]=useState([]);
+  const [search, setSearch] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
 
   const Status={
     notStarted:"notStarted",
@@ -31,11 +32,14 @@ function App() {
        value2={value2} setValue2={setValue2}
       //  editId={editId} setEditId={setEditId}
       //  editHandler={editHandler}
+      search={search} setSearch={setSearch}
+      filterStatus={filterStatus} setFilterStatus={setFilterStatus}
        />
 
       <TodoList todos= {todos} setTodos={setTodos} inputText={inputText} setInputText={setInputText}
       // editHandler={editHandler} 
-      status={status} setStatus={setStatus} Status={Status}
+      status={status} setStatus={setStatus} Status={Status} search={search} setSearch={setSearch}
+      filterStatus={filterStatus} setFilterStatus={setFilterStatus}
       />
     </div>
   )}
