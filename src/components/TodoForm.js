@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import TodoList from './TodoList';
 import { TextField } from '@mui/material';
 import {Button} from '@mui/material';
@@ -10,8 +10,13 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import SearchIcon from '@mui/icons-material/Search';
 
-function TodoForm({inputText,setInputText,todos,setTodos,value1,value2,setValue1,setValue2,filterHandler,search,setSearch}) {
-
+function TodoForm({inputText,setInputText,todos,setTodos,value1,value2,setValue1,setValue2,
+                   search,setSearch,filter,setFilter,status,setStatus}) {
+                    
+useEffect(() => {
+console.log(filter);
+}, [filter]);
+                  
 const submitHandler=(e)=>{    
   e.preventDefault();
   if(inputText !==""){
@@ -19,16 +24,8 @@ const submitHandler=(e)=>{
     setInputText("");
     setValue1("");
     setValue2("");
-  }
-  
-  else{
-    alert("Please add a todo")
-  }
-};
+  }else{ alert("Please add a todo")   }};
 
-// const handleChange = (event) => {
-//   setFilterStatus(event.target.value);
-// };
 
   return (
     <div>
@@ -78,21 +75,23 @@ const submitHandler=(e)=>{
       />
 
 <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        {/* <InputLabel id="demo-simple-select-standard-label">Statu</InputLabel>
-        <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={filterStatus}
-        label="Age"
-        onChange={handleChange}
-      > */}
-          <MenuItem value="All">
-            All
-          </MenuItem>
-          
+
+          <MenuItem
+           value="all"
+           name="todolist"
+           onChange={(e) => setStatus(e.value)}
+           checked={status === "all"}
+           > All</MenuItem>
           <Select>
-          <MenuItem value="Open">Open</MenuItem>
-          <MenuItem value="in Process" onClick={filterHandler}>Process</MenuItem>
+          <MenuItem
+           value="Open"
+           onChange={(e) => setStatus(e.value)}
+           checked={status === "notStarted"}
+           >Open</MenuItem>
+          <MenuItem 
+          value="in Process"
+          onChange={(e) => setStatus(e.value)}
+           checked={status === "notStarted"} >Process</MenuItem>
           <MenuItem value="Done">Done</MenuItem>
         </Select>
 

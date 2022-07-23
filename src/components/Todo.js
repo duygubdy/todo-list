@@ -14,7 +14,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 
-function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText,search,setSearch}) {
+function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText,search,setSearch,filter,setFilter}) {
   const [open, setOpen] = React.useState(false);
   const [editText, setEditText] = useState("");
   const [temp, setTemp] = useState(todos);
@@ -28,16 +28,7 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText,se
     searchText();
   }, [search]);
 
-  useEffect(() => {
-    searchText();
-  }, [search]);
-
-  // useEffect(() => {
-  //   filterStatus();
-  //   console.log(searchStatus);
-  // }, [searchStatus]);
-
-  
+ 
   const handleClose = () => {
     setOpen(false);
   };
@@ -76,18 +67,6 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText,se
       setTodos(temp);
     }
   };
-
-  // const filterStatus = () => {
-  //   if (searchStatus && searchStatus.length > 0) {
-  //     const filterStatus = todos.filter((t) => {
-  //       return t.Status === searchStatus;
-  //     });
-  //     if (filterStatus) {
-  //       setTodos(filterStatus);
-  //     }
-  //   }
-  // };
-
 
   return (
     <div className="to-do">
