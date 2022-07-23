@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState,useEffect } from 'react'
+import { useEffect } from 'react'
 import TodoList from './TodoList';
 import { TextField } from '@mui/material';
 import {Button} from '@mui/material';
@@ -26,6 +26,7 @@ const submitHandler=(e)=>{
     setValue2("");
   }else{ alert("Please add a todo")   }};
 
+  
 
   return (
     <div>

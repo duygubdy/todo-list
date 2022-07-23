@@ -30,7 +30,11 @@ function App() {
   return (   
     <div className="App" >
       <h1>Demo Project</h1>
-      <ReporterTodoForm searchUsers={searchUsers} setSearchUsers={setSearchUsers} date={date} setDate={setDate} name={name} setName={setName} />
+      <ReporterTodoForm
+       searchUsers={searchUsers} setSearchUsers={setSearchUsers}
+      date={date} setDate={setDate} 
+      title={title} setTitle={setTitle} 
+      todos={todos} setTodos={setTodos}/>
       
       {/* <TodoForm   todos={todos} setTodos={setTodos}
        inputText={inputText} setInputText={setInputText}

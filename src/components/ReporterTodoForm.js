@@ -10,10 +10,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 
-function ReporterTodoForm({searchUsers,setSearchUsers,name,setName,date,setDate}) {
+function ReporterTodoForm({searchUsers,setSearchUsers,title,setTitle,date,setDate,todos,setTodos}) {
+    const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
         console.log(searchUsers);
@@ -28,6 +31,14 @@ function ReporterTodoForm({searchUsers,setSearchUsers,name,setName,date,setDate}
     setOpen(false);
   };
 
+  const submitHandler=(e)=>{    
+    e.preventDefault();
+    if(title !==""){
+      setTodos([...todos,{title:title,date:date,status:"notStarted",id:Math.random()*10000}])
+      setTitle("");
+      setDate("");
+    }else{ alert("Please add a todo")   }};
+
   return (
     <div>
       <TextField 
@@ -38,7 +49,7 @@ function ReporterTodoForm({searchUsers,setSearchUsers,name,setName,date,setDate}
         onChange={e => setSearchUsers(e.target.value)}
         id="filled-basic" label="Search" variant="filled"
       ></TextField>
-      <SearchIcon/>
+      
 
       <Button 
         className='reporter-add'
@@ -48,12 +59,12 @@ function ReporterTodoForm({searchUsers,setSearchUsers,name,setName,date,setDate}
 
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add New User</DialogTitle>
+        <DialogTitle>Add New Job</DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"
             id="name"
-            label="update todo"
+            label="Add new job for assignee"
             type="text"
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
@@ -68,19 +79,21 @@ function ReporterTodoForm({searchUsers,setSearchUsers,name,setName,date,setDate}
             fullWidth
             variant="standard"
           />
-          <TextField
-            margin="dense"
-            id="name"
-            label="update todo"
-            type="text"
-            onChange={(e) => setEditText(e.target.value)}
-            fullWidth
-            variant="standard"
-          />
+          <MenuItem
+           value="all"
+           name="todolist"
+           > All</MenuItem>
+          <Select>
+          <MenuItem
+           value="Users"
+           >Open</MenuItem>
+        </Select>
+
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={editHandler}>Update</Button>
+          <Button onClick={submitHandler}>Go</Button>
         </DialogActions>
       </Dialog>
 

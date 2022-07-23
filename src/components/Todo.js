@@ -47,13 +47,14 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText,se
   const editHandler = (e) => {
     e.preventDefault();
     todos.map((t) => {
-      if (t.id === id) t.text = editText;
+      if (t.id === id) t.title = editText;
     });
 
     setOpen(false);
     setTodos(todos);
     setInputText();
   };
+
 
   const searchText = () => {
     
