@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import {Button} from '@mui/material';
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -13,10 +13,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import  {postoneTodo}  from "../services/todoService.js";
+import  db  from "../firebaseDb"
 
 
-function ReporterTodoForm({searchUsers,setSearchUsers,title,setTitle,date,setDate,todos,setTodos}) {
+function ReporterTodoForm({searchUsers,setSearchUsers,title,setTitle,date,setDate,todos,setTodos,search,setSearch}) {
     const [open, setOpen] = React.useState(false);
+    const [temp, setTemp] = useState(todos);
 
     useEffect(() => {
         console.log(searchUsers);
@@ -26,7 +29,24 @@ function ReporterTodoForm({searchUsers,setSearchUsers,title,setTitle,date,setDat
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const getAllTodos = () => {
+    db
+      .collection('jobs')
+      .get()
+          
+      .then((data) => {
+              let todos=[]
+        data.forEach((doc) => {
+          todos.push({
+                      todoId: doc.id,
+                      title: doc.data().title,
+            body: doc.data().body,
+            createdAt: doc.data().createdAt,
+          });
+        });
+        setTodos(todos)
+      })
+      }
   const handleClose = () => {
     setOpen(false);
   };
@@ -34,10 +54,17 @@ function ReporterTodoForm({searchUsers,setSearchUsers,title,setTitle,date,setDat
   const submitHandler=(e)=>{    
     e.preventDefault();
     if(title !==""){
-      setTodos([...todos,{title:title,date:date,status:"notStarted",id:Math.random()*10000}])
+      const newTodoItem={
+        title:title,date:date,status:"notStarted",user_id:localStorage.getItem("user_id")
+      }
+      const item=postoneTodo(newTodoItem)
+      setTodos([...todos,newTodoItem])
+
       setTitle("");
       setDate("");
+      handleClose()
     }else{ alert("Please add a todo")   }};
+
 
   return (
     <div>
@@ -57,6 +84,17 @@ function ReporterTodoForm({searchUsers,setSearchUsers,title,setTitle,date,setDat
         variant="contained" color="success"
       >Add</Button>
 
+      <div>
+      {
+      todos.map((todo)=>{
+          <div>
+            DASDASdas
+        {todo.title} {todo.todoId}
+          </div>
+        })
+        }
+        </div>
+      
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add New Job</DialogTitle>

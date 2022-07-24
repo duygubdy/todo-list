@@ -14,10 +14,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 
-function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText,search,setSearch,filter,setFilter}) {
+function Todo({text,todo,todos,setTodos,date,id,inputText,setInputText,search,setSearch,filter,setFilter,searchText}) {
   const [open, setOpen] = React.useState(false);
   const [editText, setEditText] = useState("");
-  const [temp, setTemp] = useState(todos);
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -40,38 +40,11 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText,se
   };
   const [status, setStatus] = useState(Status.notStarted);
 
-  const removeHandler = () => {
-    setTodos(todos.filter((el) => el.id !== todo.id));
-  };
-
-  const editHandler = (e) => {
-    e.preventDefault();
-    todos.map((t) => {
-      if (t.id === id) t.title = editText;
-    });
-
-    setOpen(false);
-    setTodos(todos);
-    setInputText();
-  };
-
-
-  const searchText = () => {
-    
-    if (search && search.trim().length > 0) {
-      const text = search.toLowerCase();
-      const searchTodos = todos.filter((t) => {
-        return t.text.includes(text);
-      });
-      setTodos(searchTodos);
-    } else {
-      setTodos(temp);
-    }
-  };
+  
 
   return (
     <div className="to-do">
-      <li className="todoItems">{text + " " + date1 + " " + date2  +status} </li>
+      <li className="todoItems">{text + " " + date + " " +status} </li>
 
       <PlayArrowIcon
         color="success"
@@ -85,28 +58,6 @@ function Todo({text,todo,todos,setTodos,date1,date2,id,inputText,setInputText,se
         name="done"
         onClick={() => setStatus(Status.done)}
       />
-
-      <DeleteOutlineRoundedIcon onClick={removeHandler} />
-
-      <EditIcon className="editIcon" onClick={handleClickOpen} />
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Update Todo</DialogTitle>
-        <DialogContent>
-          <TextField
-            margin="dense"
-            id="name"
-            label="update todo"
-            type="text"
-            onChange={(e) => setEditText(e.target.value)}
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={editHandler}>Update</Button>
-        </DialogActions>
-      </Dialog>
     </div>
   );
 }
