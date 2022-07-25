@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
@@ -12,8 +12,18 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 
-function Reporter({title,setTitle,date,setDate,status,setStatus,editHandler,id,search,setSearch}) {
-
+function Reporter({
+  title,
+  setTitle,
+  date,
+  setDate,
+  status,
+  setStatus,
+  editHandler,
+  id,
+  search,
+  setSearch,
+}) {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,7 +36,7 @@ function Reporter({title,setTitle,date,setDate,status,setStatus,editHandler,id,s
   const removeHandler = () => {
     setTodos(todos.filter((el) => el.id !== todo.id));
   };
-  
+
   const editHandler = (e) => {
     e.preventDefault();
     todos.map((t) => {
@@ -37,10 +47,10 @@ function Reporter({title,setTitle,date,setDate,status,setStatus,editHandler,id,s
     setTodos(todos);
     setInputText();
   };
-  
+
   return (
     <div>
-      <li className="todoItems">{title + " " + date+ " "  +status} </li>
+      <li className="todoItems">{title + " " + date + " " + status} </li>
 
       <DeleteOutlineRoundedIcon onClick={removeHandler} />
       <EditIcon className="editIcon" onClick={handleClickOpen} />
@@ -51,7 +61,8 @@ function Reporter({title,setTitle,date,setDate,status,setStatus,editHandler,id,s
             margin="dense"
             id="name"
             label="update todo"
-            type="email"şl
+            type="email"
+            şl
             onChange={(e) => setEditText(e.target.value)}
             fullWidth
             variant="standard"
@@ -62,9 +73,8 @@ function Reporter({title,setTitle,date,setDate,status,setStatus,editHandler,id,s
           <Button onClick={editHandler}>Update</Button>
         </DialogActions>
       </Dialog>
-
     </div>
-  )
+  );
 }
 
-export default Reporter
+export default Reporter;

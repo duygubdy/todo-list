@@ -1,7 +1,7 @@
-import React from 'react'
-import { useEffect,useState } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
-import {Button} from '@mui/material';
+import React from "react";
+import { useEffect, useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import { Button } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import TodoForm from "./TodoForm";
 import TextField from "@mui/material/TextField";
@@ -10,90 +10,119 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import  {postoneTodo}  from "../services/todoService.js";
-import  db  from "../firebaseDb"
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { postoneTodo, getAllTodos } from "../services/todoService.js";
+import db from "../firebaseDb";
+import TodoList from "./TodoList";
 
+function ReporterTodoForm({
+  searchUsers,
+  setSearchUsers,
+  title,
+  setTitle,
+  date,
+  setDate,
+  todos,
+  setTodos,
+  search,
+  setSearch,
+}) {
+  const [open, setOpen] = React.useState(false);
+  const [temp, setTemp] = useState([]);
 
-function ReporterTodoForm({searchUsers,setSearchUsers,title,setTitle,date,setDate,todos,setTodos,search,setSearch}) {
-    const [open, setOpen] = React.useState(false);
-    const [temp, setTemp] = useState(todos);
+   useEffect(() => {
+     console.log(searchUsers);
+   }, [searchUsers]);
 
-    useEffect(() => {
-        console.log(searchUsers);
-        }, [searchUsers]);
-
+  useEffect(() => {
+    getTodos()
+    setTodos([1,2,3])
+    console.log(todos);
+  },[]);
 
   const handleClickOpen = () => {
     setOpen(true);
+    getTodos()
+    
   };
-  const getAllTodos = () => {
-    db
-      .collection('jobs')
-      .get()
-          
-      .then((data) => {
-              let todos=[]
-        data.forEach((doc) => {
-          todos.push({
-                      todoId: doc.id,
-                      title: doc.data().title,
-            body: doc.data().body,
-            createdAt: doc.data().createdAt,
-          });
+
+  const getTodos = () => {
+    getAllTodos()
+    .then((data) => {
+      var dat = [];
+      data.forEach((doc) => {
+        dat.push({
+          id: doc.id,
+          title: doc.data().title,
+          status: doc.data().status,
+          date: doc.data().date,
         });
-        setTodos(todos)
-      })
-      }
+      });
+      console.log(dat);
+      setTodos(dat)
+      console.log(todos);
+    })
+
+    
+  };
   const handleClose = () => {
     setOpen(false);
   };
 
-  const submitHandler=(e)=>{    
+  const submitHandler = (e) => {
     e.preventDefault();
-    if(title !==""){
-      const newTodoItem={
-        title:title,date:date,status:"notStarted",user_id:localStorage.getItem("user_id")
-      }
-      const item=postoneTodo(newTodoItem)
-      setTodos([...todos,newTodoItem])
+    if (title !== "") {
+      const newTodoItem = {
+        title: title,
+        date: date,
+        status: "notStarted",
+        user_id: localStorage.getItem("user_id"),
+      };
+      const item = postoneTodo(newTodoItem);
+      setTodos([...todos, newTodoItem]);
 
       setTitle("");
       setDate("");
-      handleClose()
-    }else{ alert("Please add a todo")   }};
-
+      handleClose();
+    } else {
+      alert("Please add a todo");
+    }
+  };
 
   return (
     <div>
-      <TextField 
-        className='reporter-search'
-        name="searchUser"  
+      <TextField
+        className="reporter-search"
+        name="searchUser"
         type="text"
         value={searchUsers}
-        onChange={e => setSearchUsers(e.target.value)}
-        id="filled-basic" label="Search" variant="filled"
+        onChange={(e) => setSearchUsers(e.target.value)}
+        id="filled-basic"
+        label="Search"
+        variant="filled"
       ></TextField>
-      
-
-      <Button 
-        className='reporter-add'
-        onClick={handleClickOpen}
-        variant="contained" color="success"
-      >Add</Button>
-
-      <div>
-      {
-      todos.map((todo)=>{
+      asd
+{/* <div>
+DASDASdas
+        {todos.map((todo,key) => {
           <div>
-            DASDASdas
-        {todo.title} {todo.todoId}
-          </div>
-        })
-        }
-        </div>
+            
+            {todo.title} 
+          </div>;
+        })}
+      </div> */}
+      
+      <Button
+        className="reporter-add"
+        onClick={handleClickOpen}
+        variant="contained"
+        color="success"
+      >
+        Add
+      </Button>
+
       
 
       <Dialog open={open} onClose={handleClose}>
@@ -117,26 +146,21 @@ function ReporterTodoForm({searchUsers,setSearchUsers,title,setTitle,date,setDat
             fullWidth
             variant="standard"
           />
-          <MenuItem
-           value="all"
-           name="todolist"
-           > All</MenuItem>
+          <MenuItem value="all" name="todolist">
+            {" "}
+            All
+          </MenuItem>
           <Select>
-          <MenuItem
-           value="Users"
-           >Open</MenuItem>
-        </Select>
-
-
+            <MenuItem value="Users">Open</MenuItem>
+          </Select>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={submitHandler}>Go</Button>
         </DialogActions>
       </Dialog>
-
     </div>
-  )
+  );
 }
 
-export default ReporterTodoForm
+export default ReporterTodoForm;

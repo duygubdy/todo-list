@@ -1,5 +1,3 @@
-
-
 import firebase from 'firebase';
 
 const firebaseConfig = {
@@ -12,6 +10,5 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
-
 
   export default db ;
