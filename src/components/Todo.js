@@ -14,7 +14,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 
-function Todo({text,todo,todos,setTodos,date,id,inputText,setInputText,search,setSearch,filter,setFilter,searchText}) {
+function Todo({title,todo,todos,setTodos,date,id,inputText,setInputText,search,setSearch,filter,setFilter,searchText}) {
   const [open, setOpen] = React.useState(false);
   const [editText, setEditText] = useState("");
   
@@ -24,9 +24,9 @@ function Todo({text,todo,todos,setTodos,date,id,inputText,setInputText,search,se
   };
 
   
-  useEffect(() => {
-    searchText();
-  }, [search]);
+  // useEffect(() => {
+  //   searchText();
+  // }, [search]);
 
  
   const handleClose = () => {
@@ -44,7 +44,7 @@ function Todo({text,todo,todos,setTodos,date,id,inputText,setInputText,search,se
 
   return (
     <div className="to-do">
-      <li className="todoItems">{text + " " + date + " " +status} </li>
+      <li className="todoItems">{title + " " + date + " " +status} </li>
 
       <PlayArrowIcon
         color="success"

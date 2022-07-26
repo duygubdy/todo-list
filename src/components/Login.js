@@ -3,7 +3,7 @@ import { getUserByEmail } from "../services/userService";
 import { TextField } from '@mui/material';
 import {Button} from '@mui/material';
 
-export default function Login() {
+export default function Login({currentUser,setCurrentUser}) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -18,7 +18,9 @@ export default function Login() {
       if(user.email!==email||user.password!==password){
         alert("email or password wrong")
       }
+      setCurrentUser(user)
       localStorage.setItem("currentUser",JSON.stringify(user))
+      
   }))
   }
   

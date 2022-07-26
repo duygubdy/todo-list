@@ -1,4 +1,3 @@
-
 import db from "../firebaseDb";
 
 export const postoneTodo = (job) => {
@@ -7,6 +6,7 @@ export const postoneTodo = (job) => {
     date: job.date,
     status: job.status,
     user_id: job.user_id,
+    reporter_id:job.reporter_id
   };
 
   db.collection("jobs")
@@ -23,6 +23,12 @@ export const postoneTodo = (job) => {
 
 export const getAllTodos = async() => {
   const data=  await db.collection("jobs").get();
-
   return data;
 };
+
+export const getTodosByUserId=async (userId)=>{
+  return await db.collection("jobs").where("user_id","==",userId).get()
+}
+export const getTodosByReporterId=(reporterId)=>{
+  return db.collection("jobs").where("reporter_id","==",reporterId).get()
+}

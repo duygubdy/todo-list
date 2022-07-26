@@ -1,21 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "@mui/material";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import TodoForm from "./TodoForm";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { postoneTodo, getAllTodos } from "../services/todoService.js";
-import db from "../firebaseDb";
-import TodoList from "./TodoList";
+import { postoneTodo,getTodosByReporterId } from "../services/todoService.js";
+import {getAllUsers} from "../services/userService"
 
 function ReporterTodoForm({
   searchUsers,
@@ -28,48 +22,78 @@ function ReporterTodoForm({
   setTodos,
   search,
   setSearch,
+  currentUser
 }) {
   const [open, setOpen] = React.useState(false);
   const [temp, setTemp] = useState([]);
+  const [users, setUsers] = useState([])
+  const [userId, setUserId] = useState("")
+  const [reporterId, setReporterId] = useState("")
 
    useEffect(() => {
      console.log(searchUsers);
    }, [searchUsers]);
 
   useEffect(() => {
-    getTodos()
-    setTodos([1,2,3])
-    console.log(todos);
+    getUsers()
+    console.log(users);
   },[]);
+
+  useEffect(() => {
+    var a=JSON.parse(localStorage.getItem("currentUser"))
+    
+    if(a){
+      setReporterId(a.id)
+      getTodosReporter()
+    }
+  }, [reporterId])
+  
 
   const handleClickOpen = () => {
     setOpen(true);
-    getTodos()
-    
+    getUsers()
+    console.log(users);
   };
 
-  const getTodos = () => {
-    getAllTodos()
-    .then((data) => {
-      var dat = [];
-      data.forEach((doc) => {
-        dat.push({
-          id: doc.id,
-          title: doc.data().title,
-          status: doc.data().status,
-          date: doc.data().date,
-        });
-      });
-      console.log(todos);
-      setTodos(dat);
-      console.log(setTodos(dat));
-    })
 
-    
-  };
   const handleClose = () => {
     setOpen(false);
   };
+
+  const getUsers=()=>{
+    getAllUsers().then((data)=>{
+      let dat=[]
+      data.forEach((doc)=>{
+        dat.push({
+          id:doc.id,
+          email:doc.data().email,
+          name:doc.data().name,
+          surname:doc.data().surname,
+          password:doc.data().password,
+          isReporter:doc.data().isReporter
+        })
+      })
+      setUsers(dat)
+    })
+  }
+
+  const getTodosReporter=()=>{
+    getTodosByReporterId(reporterId).then((data)=>{
+      let jobs=[];
+      data.forEach((doc)=>{
+        jobs.push({
+          id:doc.id,
+          date:doc.data().date,
+          status:doc.data().status,
+          reporter_id:doc.data().reporter_id,
+          title:doc.data().title,
+          user_id:doc.data().user_id
+        })
+      })
+      console.log(jobs);
+      setTodos(jobs)
+    })
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -78,11 +102,13 @@ function ReporterTodoForm({
         title: title,
         date: date,
         status: "notStarted",
-        user_id: localStorage.getItem("user_id"),
+        user_id: userId,
+        reporter_id:currentUser.id
+        
       };
       const item = postoneTodo(newTodoItem);
       setTodos([...todos, newTodoItem]);
-
+      console.log(userId);
       setTitle("");
       setDate("");
       handleClose();
@@ -104,16 +130,6 @@ function ReporterTodoForm({
         variant="filled"
       ></TextField>
       
-{/* <div>
-DASDASdas
-        {todos.map((todo,key) => {
-          <div>
-            
-            {todo.title} 
-          </div>;
-        })}
-      </div> */}
-      
       <Button
         className="reporter-add"
         onClick={handleClickOpen}
@@ -122,8 +138,18 @@ DASDASdas
       >
         Add
       </Button>
+      <Button style={{float:"right"}} onClick={()=>{
+        localStorage.removeItem("currentUser")
+        window.location.reload()
+      }}> Sign Out</Button>
 
-      
+      {
+        todos.map((todo)=>(
+          <div>
+            {todo.title} {todo.date}  {todo.status}
+          </div>
+        ))
+      }
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add New Job</DialogTitle>
@@ -148,10 +174,16 @@ DASDASdas
           />
           <MenuItem value="all" name="todolist">
             {" "}
-            All
+            Users
           </MenuItem>
-          <Select>
-            <MenuItem value="Users">Open</MenuItem>
+          
+          <Select onChange={(e)=>setUserId(e.target.value)}>
+            {
+              // eslint-disable-next-line array-callback-return
+              users.map((user)=>(
+                <MenuItem value={user.id}> {user.name} {user.surname} </MenuItem>
+              ))
+            }
           </Select>
         </DialogContent>
         <DialogActions>
@@ -159,8 +191,6 @@ DASDASdas
           <Button onClick={submitHandler}>Go</Button>
         </DialogActions>
       </Dialog>
-
-     
     </div>
   );
 }
