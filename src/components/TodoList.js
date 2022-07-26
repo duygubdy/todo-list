@@ -10,6 +10,7 @@ function TodoList({Status,status,setStatus,todos,setTodos,title,setTitle,editHan
 
   useEffect(() => {
     var a=JSON.parse(localStorage.getItem("currentUser"))
+    
     if(a){
       setUser(a.id)
       getTodosUserId()

@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { postoneTodo,getTodosByReporterId } from "../services/todoService.js";
-import {getAllUsers} from "../services/userService"
+import {getAllUsers,getUserById} from "../services/userService"
 
 function ReporterTodoForm({
   searchUsers,
@@ -29,6 +29,7 @@ function ReporterTodoForm({
   const [users, setUsers] = useState([])
   const [userId, setUserId] = useState("")
   const [reporterId, setReporterId] = useState("")
+  const [display, setDisplay] = useState([])
 
    useEffect(() => {
      console.log(searchUsers);
@@ -36,6 +37,7 @@ function ReporterTodoForm({
 
   useEffect(() => {
     getUsers()
+    
     console.log(users);
   },[]);
 
@@ -45,8 +47,15 @@ function ReporterTodoForm({
     if(a){
       setReporterId(a.id)
       getTodosReporter()
+      
     }
   }, [reporterId])
+  
+  useEffect(() => {
+    if(todos&&users){
+      displayData()
+    }
+  }, [display])
   
 
   const handleClickOpen = () => {
@@ -117,6 +126,25 @@ function ReporterTodoForm({
     }
   };
 
+  const displayData=()=>{
+    let data=[]
+    todos.map((todo)=>{
+      users.map((user)=>{
+        if(todo.user_id===user.id){
+          data.push({
+            title:todo.title,
+            date:todo.date,
+            status:todo.status,
+            name:user.name
+          })
+        }
+      })
+    })
+
+    setDisplay(data)
+    console.log(display);
+  }
+
   return (
     <div>
       <TextField
@@ -142,14 +170,14 @@ function ReporterTodoForm({
         localStorage.removeItem("currentUser")
         window.location.reload()
       }}> Sign Out</Button>
-
-      {
-        todos.map((todo)=>(
-          <div>
-            {todo.title} {todo.date}  {todo.status}
-          </div>
-        ))
-      }
+{
+display.map((dis)=>(
+  <div>
+    {dis.title} {dis.date} {dis.status} {dis.name} 
+  </div>
+))
+}
+      
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add New Job</DialogTitle>
