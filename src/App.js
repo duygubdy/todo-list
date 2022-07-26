@@ -17,7 +17,7 @@ function App() {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [currentUser, setCurrentUser] = useState({});
-
+console.log('todos',todos)
   const Status = {
     notStarted: "notStarted",
     process: "process",

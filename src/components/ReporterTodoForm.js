@@ -60,9 +60,9 @@ function ReporterTodoForm({
           date: doc.data().date,
         });
       });
-      console.log(dat);
-      setTodos(dat)
       console.log(todos);
+      setTodos(dat);
+      console.log(setTodos(dat));
     })
 
     
@@ -103,7 +103,7 @@ function ReporterTodoForm({
         label="Search"
         variant="filled"
       ></TextField>
-      asd
+      
 {/* <div>
 DASDASdas
         {todos.map((todo,key) => {
@@ -159,6 +159,8 @@ DASDASdas
           <Button onClick={submitHandler}>Go</Button>
         </DialogActions>
       </Dialog>
+
+     
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Todo from './Todo'
 
 
 function TodoList({Status,status,setStatus,todos,setTodos,title,setTitle,editHandler,search,setSearch,filter,setFilter}) {
-
+console.log('list',todos);
   return (
     <div className='todo-list'>
       <box> 
