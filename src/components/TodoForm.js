@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import TodoList from './TodoList';
 import { TextField } from '@mui/material';
 import {Button} from '@mui/material';
-import Todo from './Todo';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';

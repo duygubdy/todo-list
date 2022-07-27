@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import Todo from './Todo'
 import { getAllTodos, getTodosByUserId } from "../services/todoService"
 import { Button, useScrollTrigger } from "@mui/material";
 import Table from '@mui/material/Table';
@@ -13,10 +12,8 @@ import Paper from '@mui/material/Paper';
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 
-function TodoList({status,setStatus,Status, todos, setTodos, title, setTitle, editHandler, search, setSearch, filter, setFilter, currentUser, todo }) {
+function TodoList({ status,setStatus,Status,todos, setTodos, title, setTitle, editHandler, search, setSearch, filter, setFilter, currentUser, todo }) {
   const [user, setUser] = useState("")
-
- 
 
   useEffect(() => {
     var a = JSON.parse(localStorage.getItem("currentUser"))
@@ -98,7 +95,8 @@ function TodoList({status,setStatus,Status, todos, setTodos, title, setTitle, ed
                       color="success"
                       className="start-button"
                       name="start"
-                      onClick={() => setStatus(Status.process)} />
+                      onClick={() => setStatus(Status.process)   
+                      }/>
 
                     <CheckCircleOutlineRoundedIcon
                       className="done-button"
@@ -114,26 +112,6 @@ function TodoList({status,setStatus,Status, todos, setTodos, title, setTitle, ed
           </Table>
         </TableContainer>
 
-        <ul className='todo-list'>
-          {todos.map((todo) => (
-            <Todo
-              title={todo.title}
-              setTitle={setTitle}
-              todos={todos}
-              setTodos={setTodos}
-              key={todo.id}
-              date={todo.date}
-              status={status}
-              Status={Status}
-              setStatus={setStatus}
-              todo={todo}
-              id={todo.id}
-              search={search}
-              setSearch={setSearch}
-              filter={filter}
-              setFilter={setFilter} />
-          ))}
-        </ul>
       </box>
     </div>
   )
