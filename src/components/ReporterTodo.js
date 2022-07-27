@@ -1,9 +1,6 @@
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import TodoForm from "./TodoForm";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -62,7 +59,6 @@ function Reporter({
             id="name"
             label="update todo"
             type="email"
-            şl
             onChange={(e) => setEditText(e.target.value)}
             fullWidth
             variant="standard"

@@ -11,6 +11,15 @@ import Select from "@mui/material/Select";
 import { postoneTodo,getTodosByReporterId } from "../services/todoService.js";
 import {getAllUsers,getUserById} from "../services/userService"
 
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 function ReporterTodoForm({
   searchUsers,
   setSearchUsers,
@@ -170,13 +179,40 @@ function ReporterTodoForm({
         localStorage.removeItem("currentUser")
         window.location.reload()
       }}> Sign Out</Button>
-{
-display.map((dis)=>(
-  <div>
-    {dis.title} {dis.date} {dis.status} {dis.name} 
+
+
+  <div> <TableContainer component={Paper}>
+  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableHead>
+      <TableRow>
+        <TableCell>Jobs</TableCell>
+        <TableCell align="right">Date</TableCell>
+        <TableCell align="right">Status</TableCell>
+        <TableCell align="right">Asignee</TableCell>
+        <TableCell align="right">Actions</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+
+    {display.map((dis)=>(
+        <TableRow
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        >
+          <TableCell component="th" scope="row">
+            {dis.title}
+          </TableCell>
+          <TableCell align="right">{dis.date}</TableCell>
+          <TableCell align="right">{dis.status}</TableCell>
+          <TableCell align="right">{dis.name}</TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+</TableContainer>
+    {/* {dis.title} {dis.date} {dis.status} {dis.name}  */}
   </div>
-))
-}
+
+
       
 
       <Dialog open={open} onClose={handleClose}>

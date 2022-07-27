@@ -3,9 +3,16 @@ import { useState,useEffect } from 'react'
 import Todo from './Todo'
 import {getAllTodos,getTodosByUserId} from "../services/todoService"
 import { Button, useScrollTrigger } from "@mui/material";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 
-function TodoList({Status,status,setStatus,todos,setTodos,title,setTitle,editHandler,search,setSearch,filter,setFilter,currentUser}) {
+function TodoList({Status,status,setStatus,todos,setTodos,title,setTitle,editHandler,search,setSearch,filter,setFilter,currentUser,todo}) {
   const [user, setUser] = useState("")
 
   useEffect(() => {
@@ -60,6 +67,36 @@ function TodoList({Status,status,setStatus,todos,setTodos,title,setTitle,editHan
         localStorage.removeItem("currentUser")
         window.location.reload()
       }}> Sign Out</Button>
+
+<TableContainer component={Paper}>
+  <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableHead>
+      <TableRow>
+        <TableCell>Jobs</TableCell>
+        <TableCell align="right">Date</TableCell>
+        <TableCell align="right">Status</TableCell>
+        <TableCell align="right">Actions</TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+
+    {todos.map((todo)=>(
+        <TableRow
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        >
+          <TableCell component="th" scope="row">
+          {todo.title}
+          </TableCell>
+          <TableCell align="right">{todo.date}</TableCell>
+          <TableCell align="right">{todo.status}</TableCell>
+        </TableRow>
+        
+      ))}
+    </TableBody>
+    
+  </Table>
+</TableContainer>
+
       <ul className='todo-list'>
             {todos.map((todo)=>(
                 <Todo 
@@ -69,7 +106,6 @@ function TodoList({Status,status,setStatus,todos,setTodos,title,setTitle,editHan
                   setTodos={setTodos}
                   key={todo.id} 
                   date={todo.date}
-                  editHandler={editHandler}
                   status={status}
                   Status={Status}
                   setStatus={setStatus}

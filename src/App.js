@@ -20,10 +20,9 @@ function App() {
   const [reporter, setReporter] = useState(true)
 
   const Status = {
-    notStarted: "notStarted",
-    process: "process",
-    done: "done",
-    all: "all",
+    notStarted: "To do",
+    process: " in Process",
+    done: "Done",
   };
   const [status, setStatus] = useState(Status.notStarted);
 
@@ -41,6 +40,7 @@ function App() {
       setCurrentUser={setCurrentUser}
       ></Login>
     </div>)
+
   }else if(currentUser.isReporter){
     return (
       <div className="App">
@@ -75,53 +75,6 @@ function App() {
         filterStatus={filter} setFilterStatus={setFilter}
        /> </div>)
   }
-
-  return (
-    <div className="App">
-      <h1>Demo Project</h1>
-      {/* {
-        !currentUser?
-        <Login
-      currentUser={currentUser}
-      setCurrentUser={setCurrentUser}
-      ></Login>
-      :
-      (reporter ?
-        <ReporterTodoForm
-      searchUsers={searchUsers}
-      setSearchUsers={setSearchUsers}
-      date={date}
-      setDate={setDate}
-      title={title}
-      setTitle={setTitle}
-      todos={todos}
-      setTodos={setTodos}
-      status={status}
-      setStatus={setStatus}
-      search={search}
-      setSearch={setSearch}/> :
-      <TodoList 
-     todos= {todos} setTodos={setTodos} 
-     title={title} 
-     inputText={inputText} setInputText={setInputText}
-     status={status} setStatus={setStatus} 
-     Status={Status} 
-     search={search} setSearch={setSearch}
-     filterStatus={filter} setFilterStatus={setFilter}
-    /> 
-        )
-      } */}
-
-      {/* <TodoForm   
-       todos={todos} setTodos={setTodos}
-        inputText={inputText} setInputText={setInputText}
-      value1={value1} setValue1={setValue1}
-        value2={value2} setValue2={setValue2}
-       filterStatus={filter} setFilterStatus={setFilter}
-        /> */}
-
-    </div>
-  );
 }
 
 export default App;
