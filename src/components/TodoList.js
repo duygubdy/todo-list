@@ -11,10 +11,24 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
+import db from "../firebaseDb";
+import {doc,updateDoc} from "firebase/firestore";
 
-function TodoList({ status,setStatus,Status,todos, setTodos, title, setTitle, editHandler, search, setSearch, filter, setFilter, currentUser, todo }) {
+function TodoList({status,setStatus, todos, setTodos, title, setTitle, editHandler, search, setSearch, filter, setFilter, currentUser, todo }) {
   const [user, setUser] = useState("")
 
+  const updateStatus=async(todo)=>{
+    console.log('ssss',todo.status)
+    var status;
+    if(todo.status=="notStarted"){
+      status="inProcess";
+    }
+    if(todo.status== "inProcess"){
+      status="Done";
+    }
+     await updateDoc (doc(db,"jobs",todo.id), {status:status});
+
+  }
   useEffect(() => {
     var a = JSON.parse(localStorage.getItem("currentUser"))
 
@@ -59,6 +73,7 @@ function TodoList({ status,setStatus,Status,todos, setTodos, title, setTitle, ed
     })
   }
 
+    
   return (
     <div className='todo-list'>
       <h3>My Todos</h3>
@@ -91,18 +106,7 @@ function TodoList({ status,setStatus,Status,todos, setTodos, title, setTitle, ed
                   <TableCell align="right"> {todo.status}</TableCell>
                   <TableCell align="right">
 
-                    <PlayArrowIcon
-                      color="success"
-                      className="start-button"
-                      name="start"
-                      onClick={() => setStatus(Status.process)   
-                      }/>
-
-                    <CheckCircleOutlineRoundedIcon
-                      className="done-button"
-                      name="done"
-                      onClick={() => setStatus(Status.done)}
-                    />
+                    <button onClick={updateStatus(todo)}> Status iletlet </button>
                   </TableCell>
                 </TableRow>
 

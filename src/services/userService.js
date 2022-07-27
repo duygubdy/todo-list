@@ -9,3 +9,8 @@ export const getUserByEmail=(email)=> {
 export const getAllUsers=()=>{
     return db.collection('Users').get()
 }
+export const getStatus=(status)=>{
+    return db
+    .collection('Jobs')
+    .where('status', '==',status).get()
+}

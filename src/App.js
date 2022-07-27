@@ -19,12 +19,12 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [reporter, setReporter] = useState(true)
 
-  const Status = {
-    notStarted: "To do",
-    process: " in Process",
-    done: "Done",
-  };
-  const [status, setStatus] = useState(Status.notStarted);
+  // const Status = {
+  //   notStarted: "To do",
+  //   process: " in Process",
+  //   done: "Done",
+  // };
+  const [status, setStatus] = useState("notStarted");
 
   useEffect(() => {
       setCurrentUser(JSON.parse(localStorage.getItem("currentUser")))
@@ -55,8 +55,8 @@ function App() {
     setTitle={setTitle}
     todos={todos}
     setTodos={setTodos}
-    status={status}
-    setStatus={setStatus}
+    // status={status}
+    // setStatus={setStatus}
     search={search}
     setSearch={setSearch}/></div>)}
     else{
@@ -70,7 +70,7 @@ function App() {
         currentUser={currentUser}
         inputText={inputText} setInputText={setInputText}
         status={status} setStatus={setStatus} 
-        Status={Status} 
+        // Status={Status} 
         search={search} setSearch={setSearch}
         filterStatus={filter} setFilterStatus={setFilter}
        /> </div>)
