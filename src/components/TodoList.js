@@ -1,7 +1,7 @@
 import React from 'react'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Todo from './Todo'
-import {getAllTodos,getTodosByUserId} from "../services/todoService"
+import { getAllTodos, getTodosByUserId } from "../services/todoService"
 import { Button, useScrollTrigger } from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,15 +10,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 
-
-function TodoList({Status,status,setStatus,todos,setTodos,title,setTitle,editHandler,search,setSearch,filter,setFilter,currentUser,todo}) {
+function TodoList({status,setStatus,Status, todos, setTodos, title, setTitle, editHandler, search, setSearch, filter, setFilter, currentUser, todo }) {
   const [user, setUser] = useState("")
 
+ 
+
   useEffect(() => {
-    var a=JSON.parse(localStorage.getItem("currentUser"))
-    
-    if(a){
+    var a = JSON.parse(localStorage.getItem("currentUser"))
+
+    if (a) {
       setUser(a.id)
       getTodosUserId()
     }
@@ -26,32 +29,32 @@ function TodoList({Status,status,setStatus,todos,setTodos,title,setTitle,editHan
 
   const getTodos = () => {
     getAllTodos()
-    .then((data) => {
-      let dat = [];
-      data.forEach((doc) => {
-        dat.push({
-          id: doc.id,
-          title: doc.data().title,
-          status: doc.data().status,
-          date: doc.data().date,
+      .then((data) => {
+        let dat = [];
+        data.forEach((doc) => {
+          dat.push({
+            id: doc.id,
+            title: doc.data().title,
+            status: doc.data().status,
+            date: doc.data().date,
+          });
         });
-      });
-      setTodos(dat)
-    })
+        setTodos(dat)
+      })
   };
 
-  const getTodosUserId=()=>{
+  const getTodosUserId = () => {
     console.log(user);
-    getTodosByUserId(user).then((data)=>{
-      let jobs=[];
-      data.forEach((doc)=>{
+    getTodosByUserId(user).then((data) => {
+      let jobs = [];
+      data.forEach((doc) => {
         jobs.push({
-          id:doc.id,
-          date:doc.data().date,
-          status:doc.data().status,
-          reporter_id:doc.data().reporter_id,
-          title:doc.data().title,
-          user_id:doc.data().user_id
+          id: doc.id,
+          date: doc.data().date,
+          status: doc.data().status,
+          reporter_id: doc.data().reporter_id,
+          title: doc.data().title,
+          user_id: doc.data().user_id
         })
       })
       console.log(jobs);
@@ -62,62 +65,76 @@ function TodoList({Status,status,setStatus,todos,setTodos,title,setTitle,editHan
   return (
     <div className='todo-list'>
       <h3>My Todos</h3>
-      <box> 
-      <Button style={{float:"right"}} onClick={()=>{
-        localStorage.removeItem("currentUser")
-        window.location.reload()
-      }}> Sign Out</Button>
+      <box>
+        <Button style={{ float: "right" }} onClick={() => {
+          localStorage.removeItem("currentUser")
+          window.location.reload()
+        }}> Sign Out</Button>
 
-<TableContainer component={Paper}>
-  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-    <TableHead>
-      <TableRow>
-        <TableCell>Jobs</TableCell>
-        <TableCell align="right">Date</TableCell>
-        <TableCell align="right">Status</TableCell>
-        <TableCell align="right">Actions</TableCell>
-      </TableRow>
-    </TableHead>
-    <TableBody>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Jobs</TableCell>
+                <TableCell align="right">Date</TableCell>
+                <TableCell align="right">Status</TableCell>
+                <TableCell align="right">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
 
-    {todos.map((todo)=>(
-        <TableRow
-          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        >
-          <TableCell component="th" scope="row">
-          {todo.title}
-          </TableCell>
-          <TableCell align="right">{todo.date}</TableCell>
-          <TableCell align="right">{todo.status}</TableCell>
-        </TableRow>
-        
-      ))}
-    </TableBody>
-    
-  </Table>
-</TableContainer>
+              {todos.map((todo) => (
+                <TableRow
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {todo.title}
+                  </TableCell>
+                  <TableCell align="right">{todo.date}</TableCell>
+                  <TableCell align="right"> {todo.status}</TableCell>
+                  <TableCell align="right">
 
-      <ul className='todo-list'>
-            {todos.map((todo)=>(
-                <Todo 
-                  title={todo.title}
-                  setTitle={setTitle}
-                  todos={todos}
-                  setTodos={setTodos}
-                  key={todo.id} 
-                  date={todo.date}
-                  status={status}
-                  Status={Status}
-                  setStatus={setStatus}
-                  todo={todo} 
-                  id={todo.id}
-                  search={search}
-                  setSearch={setSearch}
-                  filter={filter}
-                  setFilter={setFilter}/>
-            ))}
+                    <PlayArrowIcon
+                      color="success"
+                      className="start-button"
+                      name="start"
+                      onClick={() => setStatus(Status.process)} />
+
+                    <CheckCircleOutlineRoundedIcon
+                      className="done-button"
+                      name="done"
+                      onClick={() => setStatus(Status.done)}
+                    />
+                  </TableCell>
+                </TableRow>
+
+              ))}
+            </TableBody>
+
+          </Table>
+        </TableContainer>
+
+        <ul className='todo-list'>
+          {todos.map((todo) => (
+            <Todo
+              title={todo.title}
+              setTitle={setTitle}
+              todos={todos}
+              setTodos={setTodos}
+              key={todo.id}
+              date={todo.date}
+              status={status}
+              Status={Status}
+              setStatus={setStatus}
+              todo={todo}
+              id={todo.id}
+              search={search}
+              setSearch={setSearch}
+              filter={filter}
+              setFilter={setFilter} />
+          ))}
         </ul>
-      </box> 
+      </box>
     </div>
   )
 }

@@ -3,8 +3,6 @@ import ReactDOM from "react-dom/client";
 import { useState ,useEffect } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import TodoForm from "./TodoForm";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -44,20 +42,11 @@ function Todo({title,todo,todos,setTodos,date,id,inputText,setInputText,search,s
 
   return (
     <div className="to-do">
-      <li className="todoItems">{title + " " + date + " " +status} </li>
+      
 
-      <PlayArrowIcon
-        color="success"
-        className="start-button"
-        name="start"
-        onClick={() => setStatus(Status.process)}
-      />
+     
 
-      <CheckCircleOutlineRoundedIcon
-        className="done-button"
-        name="done"
-        onClick={() => setStatus(Status.done)}
-      />
+    
     </div>
   );
 }
