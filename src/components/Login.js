@@ -14,13 +14,12 @@ export default function Login({currentUser,setCurrentUser}) {
           user=doc.data()
           user.id=doc.id
       })
-      console.log(user);
+      // console.log(user);
       if(user.email!==email||user.password!==password){
         alert("email or password wrong")
       }
       setCurrentUser(user)
-      localStorage.setItem("currentUser",JSON.stringify(user))
-      
+      localStorage.setItem("currentUser",JSON.stringify(user))  
   }))
   }
   

@@ -17,6 +17,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { getAllTodos, getTodosByUserId } from "../services/todoService"
 
 function ReporterTodoForm({
   searchUsers,
@@ -38,14 +39,40 @@ function ReporterTodoForm({
   const [reporterId, setReporterId] = useState("")
   const [display, setDisplay] = useState([])
 
+
+  useEffect(() => {
+    if(search&&search.trim().length>0){
+      
+
+      //setSearch(search.trim().toLowerCase())
+      searchText()
+    }
+    else{
+      getTodosByUserId()
+    }
+  }, [search])
+  
+
+
+  const searchText=()=>{
+    let jobs= todos
+    jobs.map((job)=>{
+      job.title.trim().toLowerCase()
+    })
+    var data=jobs.filter((job)=>{
+      return job.title.includes(search)
+    })
+    setTodos(data)
+  }
+
    useEffect(() => {
-     console.log(searchUsers);
+    //  console.log(searchUsers);
    }, [searchUsers]);
 
   useEffect(() => {
     getUsers()
     
-    console.log(users);
+    // console.log(users);
   },[]);
 
   useEffect(() => {
@@ -68,7 +95,7 @@ function ReporterTodoForm({
   const handleClickOpen = () => {
     setOpen(true);
     getUsers()
-    console.log(users);
+    // console.log(users);
   };
 
 
@@ -106,7 +133,7 @@ function ReporterTodoForm({
           user_id:doc.data().user_id
         })
       })
-      console.log(jobs);
+      // console.log(jobs);
       setTodos(jobs)
     })
   }
@@ -124,7 +151,7 @@ function ReporterTodoForm({
       };
       const item = postoneTodo(newTodoItem);
       setTodos([...todos, newTodoItem]);
-      console.log(userId);
+      // console.log(userId);
       setTitle("");
       setDate("");
       handleClose();
@@ -149,7 +176,7 @@ function ReporterTodoForm({
     })
 
     setDisplay(data)
-    console.log(display);
+    // console.log(display);
   }
 
   return (

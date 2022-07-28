@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
       setCurrentUser(JSON.parse(localStorage.getItem("currentUser")))
       setReporter(currentUser.isReporter)
-      console.log(currentUser);
+      // console.log(currentUser);
   }, []);
 
   if(!currentUser){
@@ -60,7 +60,7 @@ function App() {
     search={search}
     setSearch={setSearch}/></div>)}
     else{
-      console.log(currentUser.id);
+      // console.log(currentUser.id);
       return (
         <div className="App">
           <h1>Demo Project</h1>

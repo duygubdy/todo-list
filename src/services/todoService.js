@@ -17,7 +17,7 @@ export const postoneTodo = (job) => {
       return responseTodo;
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
 };
 

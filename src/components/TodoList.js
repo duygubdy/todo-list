@@ -5,6 +5,7 @@ import { Button, useScrollTrigger } from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
+import { TextField } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -18,16 +19,16 @@ function TodoList({status,setStatus, todos, setTodos, title, setTitle, editHandl
   const [user, setUser] = useState("")
 
   const updateStatus=async(todo)=>{
-    console.log('ssss',todo.status)
-    var status;
-    if(todo.status=="notStarted"){
+    // console.log('ssss',todo.status)
+    var status
+    if(todo.status==="notStarted"){
       status="inProcess";
     }
-    if(todo.status== "inProcess"){
+    if(todo.status=== "inProcess"){
       status="Done";
     }
-     await updateDoc (doc(db,"jobs",todo.id), {status:status});
-
+    await updateDoc (doc(db,"jobs",todo.id), {status:status});
+    getTodosUserId()
   }
   useEffect(() => {
     var a = JSON.parse(localStorage.getItem("currentUser"))
@@ -37,6 +38,23 @@ function TodoList({status,setStatus, todos, setTodos, title, setTitle, editHandl
       getTodosUserId()
     }
   }, [user])
+
+  useEffect(() => {
+    if(search&&search.trim().length>0){
+      //setSearch(search.trim().toLowerCase())
+      searchText()
+    }
+    else{
+      getTodosUserId()
+    }
+  }, [search])
+  const searchText=()=>{
+    let jobs= todos;
+    var data=jobs.filter((job)=>{
+      return job.title.trim().toLowerCase().includes(search.trim().toLowerCase())
+    })
+    setTodos(data)
+  }
 
   const getTodos = () => {
     getAllTodos()
@@ -55,7 +73,7 @@ function TodoList({status,setStatus, todos, setTodos, title, setTitle, editHandl
   };
 
   const getTodosUserId = () => {
-    console.log(user);
+    // console.log(user);
     getTodosByUserId(user).then((data) => {
       let jobs = [];
       data.forEach((doc) => {
@@ -68,7 +86,7 @@ function TodoList({status,setStatus, todos, setTodos, title, setTitle, editHandl
           user_id: doc.data().user_id
         })
       })
-      console.log(jobs);
+      // console.log(jobs);
       setTodos(jobs)
     })
   }
@@ -83,6 +101,18 @@ function TodoList({status,setStatus, todos, setTodos, title, setTitle, editHandl
           window.location.reload()
         }}> Sign Out</Button>
 
+        <TextField 
+        margin="dense"
+        id="name"
+        label="Search"
+        type="text"
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+        fullWidth
+        variant="standard"
+      ></TextField>
+
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -95,18 +125,21 @@ function TodoList({status,setStatus, todos, setTodos, title, setTitle, editHandl
             </TableHead>
             <TableBody>
 
-              {todos.map((todo) => (
-                <TableRow
+              {todos.map((todo,i) => (
+                
+                <TableRow key={i}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {todo.title}
+                    {todo.title} {i}
                   </TableCell>
                   <TableCell align="right">{todo.date}</TableCell>
                   <TableCell align="right"> {todo.status}</TableCell>
                   <TableCell align="right">
 
-                    <button onClick={updateStatus(todo)}> Status iletlet </button>
+                    <button onClick={()=>{
+                      updateStatus(todo)
+                    }}> Status iletlet </button>
                   </TableCell>
                 </TableRow>
 
