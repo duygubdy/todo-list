@@ -2,9 +2,10 @@ import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
-import "./App.css";
+import "./App.scss";
 import ReporterTodoForm from "./components/ReporterTodoForm";
 import Login from "./components/Login";
+
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -34,7 +35,7 @@ function App() {
 
   if(!currentUser){
     return(<div className="App">
-      <h1>Demo Project</h1>
+
       <Login
       currentUser={currentUser}
       setCurrentUser={setCurrentUser}
@@ -42,9 +43,12 @@ function App() {
     </div>)
 
   }else if(currentUser.isReporter){
+    
     return (
       <div className="App">
+        <div className="app-container">
         <h1>Demo Project</h1>
+        
     <ReporterTodoForm
     searchUsers={searchUsers}
     setSearchUsers={setSearchUsers}
@@ -58,11 +62,14 @@ function App() {
     // status={status}
     // setStatus={setStatus}
     search={search}
-    setSearch={setSearch}/></div>)}
+    setSearch={setSearch}/>
+    </div>
+    </div>)}
     else{
       // console.log(currentUser.id);
       return (
         <div className="App">
+          <>
           <h1>Demo Project</h1>
       <TodoList 
         todos= {todos} setTodos={setTodos} 
@@ -73,7 +80,10 @@ function App() {
         // Status={Status} 
         search={search} setSearch={setSearch}
         filterStatus={filter} setFilterStatus={setFilter}
-       /> </div>)
+       /> 
+       </>
+       </div>)
+       
   }
 }
 
